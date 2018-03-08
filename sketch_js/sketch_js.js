@@ -211,13 +211,16 @@ function bars(){
     rect(i, 0, 16, 100);
     i += 32;
   }
-  if(frameCount % 2 == 0)
-    i = 16;
-  else
+  if(frameCount % 2 == 0){
+    if(active)
+      i = 16;
+    else
+      i = 0;
+  }else
     i = 0;
 }
 function biohazard(){
-   background(125);
+  background(125);
   translate(width/2, height/2);
   noStroke();
   fill(0,255,0);
@@ -227,7 +230,9 @@ function biohazard(){
   //pushMatrix();
   push();
   fill(0,255,0);
-  rotate(frameCount*radians(90) / 40);
+  if(active){
+    rotate(frameCount*radians(90) / 40);
+  }
   translate(0, 90);
   triangle(-90, 90, 0, -90, 90, 90);
   rotate(radians(120));
@@ -271,7 +276,7 @@ function ballsSetup(){
 }
 
 function balls(){
-    background(225);  
+  background(225);  
   fill(0);
   //movement for first layer cicrcles
   for(j = 0; j < 30; j++){
@@ -279,10 +284,12 @@ function balls(){
     ellipse(xStartingPoint[j], yStartingPoint[j], 15, 15);
     //photo.resize(15,15);
     //image(photo,xStartingPoint[j],yStartingPoint[j]);
-    yStartingPoint[j] += ySpeed[j];
-    if (yStartingPoint[j] > 380) {
-      yStartingPoint[j] = -7;
-      xStartingPoint[j] = random(0,780);
+    if(active){
+      yStartingPoint[j] += ySpeed[j];
+      if (yStartingPoint[j] > 380) {
+        yStartingPoint[j] = -7;
+        xStartingPoint[j] = random(0,780);
+      }
     }
   }
   //movement for second layer cicrcles
@@ -290,24 +297,29 @@ function balls(){
   for(j = 30; j < 70; j++){
     
     ellipse(xStartingPoint[j], yStartingPoint[j], 15, 15);
-    xStartingPoint[j] += xSpeed[j];
-    yStartingPoint[j] += ySpeed[j];
     
-    if (yStartingPoint[j] > 380 || yStartingPoint[j] < 0 || xStartingPoint[j] < 0) {
-      yStartingPoint[j] = random(20, 360);
-      xStartingPoint[j] = 807;
+    if(active){
+      xStartingPoint[j] += xSpeed[j];
+      yStartingPoint[j] += ySpeed[j];
+      
+      if (yStartingPoint[j] > 380 || yStartingPoint[j] < 0 || xStartingPoint[j] < 0) {
+        yStartingPoint[j] = random(20, 360);
+        xStartingPoint[j] = 807;
+      }
     }
   }
   //movement for third layer cicrcles
   for(j = 70; j < 110; j++){
     
     ellipse(xStartingPoint[j], yStartingPoint[j], 15, 15);
-    xStartingPoint[j] += xSpeed[j];
-    yStartingPoint[j] += ySpeed[j];
-    
-    if (yStartingPoint[j] > 380 || yStartingPoint[j] < 0 || xStartingPoint[j] > 800) {
-      yStartingPoint[j] = random(20, 360);
-      xStartingPoint[j] = -7;
+    if(active){
+      xStartingPoint[j] += xSpeed[j];
+      yStartingPoint[j] += ySpeed[j];
+      
+      if (yStartingPoint[j] > 380 || yStartingPoint[j] < 0 || xStartingPoint[j] > 800) {
+        yStartingPoint[j] = random(20, 360);
+        xStartingPoint[j] = -7;
+      }
     }
   }
 }
